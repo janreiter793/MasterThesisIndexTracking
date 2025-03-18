@@ -29,7 +29,7 @@ df %<>%
          Price = as.numeric(Price)) %>% 
   filter(Weight > 0)
 
-# Find the observation with smallest weight and largest unit price, assume that
+# Find the position with smallest weight and largest unit price, assume that
 # we buy just one of these
 df_subset <- df[which(df$Weight == min(df$Weight)),]
 dp <-  
