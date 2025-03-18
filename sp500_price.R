@@ -20,7 +20,7 @@ table <- webpage %>%
   html_table(fill = TRUE)
 df <- table[[1]]
 
-# Turn the numbers from character to numeric, and remove observationw with
+# Turn the numbers from character to numeric, and remove observations with
 # weight <= 0. Hence, the estimate in the end, is lower than the actual price
 df %<>% 
   mutate(Weight = substr(Weight, 1, 4),
@@ -29,10 +29,17 @@ df %<>%
          Price = as.numeric(Price)) %>% 
   filter(Weight > 0)
 
+# Find the observation with smallest weight and largest unit price, assume that
+# we buy just one of these
+df_subset <- df[which(df$Weight == min(df$Weight)),]
+dp <-  
+  df_subset %>% 
+  filter(Price == max(Price)) %>% 
+  select(Price, Weight)
+
 # Estimate the number of each stock to buy, and calculate the price
-df$num_stocks <- df$Weight / min(df$Weight)
 cat(
-  paste0("The price of buying the SP500 by buying each stock with the correct weight is at least: ",
-         sum(df$Price * df$num_stocks),
+  paste0("The price of buying the SP500 by buying each stock with the correct weight is around: ",
+         dp$Price / dp$Weight * 100,
          "$\n")
   )
