@@ -21,7 +21,7 @@ table <- webpage %>%
 df <- table[[1]]
 
 # Turn the numbers from character to numeric, and remove observations with
-# weight <= 0. Hence, the estimate in the end, is lower than the actual price
+# weight <= 0. Hence, the estimate in the end, may be lower than the actual price
 df %<>% 
   mutate(Weight = substr(Weight, 1, 4),
          Weight = as.numeric(Weight),
