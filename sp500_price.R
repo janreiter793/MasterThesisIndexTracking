@@ -37,7 +37,7 @@ dp <-
   filter(Price == max(Price)) %>% 
   select(Price, Weight)
 
-# Estimate the number of each stock to buy, and calculate the price
+# Estimate the price of the SP500
 cat(
   paste0("The price of buying the SP500 by buying each stock with the correct weight is around: ",
          dp$Price / dp$Weight * 100,
