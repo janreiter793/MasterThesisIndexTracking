@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Lasted edited: 18-03-2025                                                    #
+# Lasted edited: 19-03-2025                                                    #
 # Author: Jan Reiter Sørensen                                                  #
 #                                                                              #
 # Calculates the price of buying all the stocks in the SP500 in the correct    #
