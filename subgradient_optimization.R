@@ -14,7 +14,7 @@ TEST_MODE <- TRUE
 ################################## Parameters ##################################
 EPSILON <- 1e-6 # Use for estimating subgradients : (f(x + EPSILON * e) - f(x))  
                 #                                   / EPSILON
-MAX_ITERS <- 1000 # The maximum number of iterations performed by the subgradient
+MAX_ITERS <- 100 # The maximum number of iterations performed by the subgradient
                   # algorithm
 TOL <- 1e-6 # Tolerance parameter. Used to determine convergence for the sub-
             # gradient optimization algorithm when changes to x is less than TOL
@@ -31,7 +31,7 @@ subgradient <- function(f, x, epsilon = EPSILON) {
   for(i in 1:n) {
     # Initialize the unit-vector with a one in entry i
     e <- rep(0, n)
-    e[i] <- 1
+    e[i] <- epsilon
     
     # Approximate the subgradient
     g[i] <- (f(x + e) - f(x)) / epsilon
@@ -50,11 +50,11 @@ subgradient_descent <- function(f, x, beta = 1, max_iters = MAX_ITERS,
   # Store x values for visualization
   history <- numeric(max_iters + 1)  
   history[1] <- x
-    
+  
   # Start iterating
   for (iter in 1:max_iters) {
-    g <- calculate_subgradient(f = f, x = x) # Estimate a subgradient
-    x_new <- x - beta / sqrt(iter) * g       # Update x
+    g <- subgradient(f = f, x = x) # Estimate a subgradient
+    x_new <- x - beta / iter * g       # Update x
     history[iter + 1] <- x_new               # Save this new estimate
     
     # Check for convergence
@@ -81,10 +81,10 @@ test_script <- function() {
   func2 <- function(x) { return(abs(x)) }      
   func3 <- function(x) { return(abs(x) + x^2) } 
   func4 <- function(x, delta = 1) {             
-    if (abs(x) <= 3) {
-      return(0.5 * x^2)
+    if (abs(x) <= 1) {
+      return(x^2)
     } else {
-      return(abs(x) + 1.5)
+      return(10 * abs(x) - 9)
     }
   }
   
