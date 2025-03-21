@@ -90,7 +90,8 @@ test_script <- function() {
   
   # Do plots
   par(mfrow = c(2, 1))
-  
+
+  # Test first function with starting value x = 5
   result <- subgradient_descent(f = func1, x = 5)
   plot(result$history, type = "o", col = "blue", pch = 16, main = "x history",
        xlab = "Iteration", ylab = "x value")
@@ -110,7 +111,8 @@ test_script <- function() {
        xlim = c(1.5 * min(values), 1.5 * max(values)), ylim = c(min(fvalues), max(fvalues)))
   lines(x = values, y = fvalues)
   abline(h = 0, col = "red", lty = 2)  # Optimal solution
-  
+
+  # Test second function with starting value x = 5
   result <- subgradient_descent(f = func2, x = 5)
   plot(result$history, type = "o", col = "blue", pch = 16, main = "x history",
        xlab = "Iteration", ylab = "x value")
@@ -130,7 +132,8 @@ test_script <- function() {
        xlim = c(1.5 * min(values), 1.5 * max(values)), ylim = c(min(fvalues), max(fvalues)))
   lines(x = values, y = fvalues)
   abline(h = 0, col = "red", lty = 2)  # Optimal solution
-  
+
+  # Test third function with starting value x = 5
   result <- subgradient_descent(f = func3, x = 5)
   plot(result$history, type = "o", col = "blue", pch = 16, main = "x history",
        xlab = "Iteration", ylab = "x value")
@@ -150,7 +153,8 @@ test_script <- function() {
        xlim = c(1.5 * min(values), 1.5 * max(values)), ylim = c(min(fvalues), max(fvalues)))
   lines(x = values, y = fvalues)
   abline(h = 0, col = "red", lty = 2)  # Optimal solution
-  
+
+  # Test fourth function with starting value x = 3
   result <- subgradient_descent(f = func4, x = 3)
   plot(result$history, type = "o", col = "blue", pch = 16, main = "x history",
        xlab = "Iteration", ylab = "x value")
