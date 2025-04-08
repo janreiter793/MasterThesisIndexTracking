@@ -63,8 +63,46 @@ refreshTimes <- function(data) {
   # Find the unique trading days
   days <- data$day %>% unique
   for(d in days) {
+    # Subset data for the same day
     temp <- 
       data %>% 
       filter(day == d)
+    
+    # Extract the unit times for each stock, put together in a list
+    symbols <- temp$symb %>% unique
+    unit_times <- list()
+    for(symbol in symbols) {
+       unit_times[[symbol]] <- temp %>% filter(symb == symbol) %$% t_unit
+    }
+    
+    # Create a matrix where each column is the unit times for each stock
+    # number of rows is the length of the shortest list of unit times
+    l_min <- min_length(unit_times)
+    adjusted_vectors <- lapply(unit_times, function(x) {
+          x[1:l_min]
+        })
+    unit_times_matrix <- do.call(cbind, adjusted_vectors)
+    
+    # Find the refresh-times
+    refresh_times <- numeric(l_min)
+    refresh_times[1] <- max(unit_times_matrix[1,])
+    unit_times_matrix <- 
+      unit_times_matrix[apply(unit_times_matrix, 1, 
+                        function(row) all(row > refresh_times[1])), ]
+    i <- 2
+    while(!is.null(nrow(unit_times_matrix))) {
+      refresh_times[i] <- max(unit_times_matrix[1,])
+      unit_times_matrix <- 
+        unit_times_matrix[apply(unit_times_matrix, 1, 
+                                function(row) all(row > refresh_times[i])), ]
+      i <- i + 1
+    }
+    
+    if(length(unit_times_matrix) > 0) {
+      refresh_times[i] <- max(unit_times_matrix) 
+    }
+    
+    # Omit zero-entries
+    refresh_times <- refresh_times[1:tail(which(refresh_times != 0), 1)]
   }
 }
