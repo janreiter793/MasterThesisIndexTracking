@@ -1,7 +1,7 @@
 ################################################################################
 #                                                                              #
 # 07-04-2025: Bias-adjusted modulated realized covariance for integrated cov-  #
-#             variance estimation
+#             variance estimation                                              #
 # - Author: Jan Reiter Sørensen                                                #
 #                                                                              #
 # An implementation of an ICov estimator based on the results of the article   #
