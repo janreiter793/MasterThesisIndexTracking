@@ -25,6 +25,8 @@ min_length <- function(l) {
 # Takes a dataset of stock data with unit times, and then returns a new 
 # dataset, where observations are refresh-time sampled
 refreshTimes <- function(data) {
+  new_data <- data.frame()
+  
   # Find the unique trading days
   days <- data$day %>% unique
   for(d in days) {
@@ -40,35 +42,49 @@ refreshTimes <- function(data) {
        unit_times[[symbol]] <- temp %>% filter(symb == symbol) %$% t_unit
     }
     
-    # Create a matrix where each column is the unit times for each stock
-    # number of rows is the length of the shortest list of unit times
-    l_min <- min_length(unit_times)
-    adjusted_vectors <- lapply(unit_times, function(x) {
-          x[1:l_min]
-        })
-    unit_times_matrix <- do.call(cbind, adjusted_vectors)
-    
-    # Find the refresh-times. This approach is wrong, see Multivariate Realized
-    # Kernels... by Barndorf-Nielsen (2008)
-    refresh_times <- numeric(l_min)
-    refresh_times[1] <- max(unit_times_matrix[1,])
-    unit_times_matrix <- 
-      unit_times_matrix[apply(unit_times_matrix, 1, 
-                        function(row) all(row > refresh_times[1])), ]
-    i <- 2
-    while(!is.null(nrow(unit_times_matrix))) {
-      refresh_times[i] <- max(unit_times_matrix[1,])
-      unit_times_matrix <- 
-        unit_times_matrix[apply(unit_times_matrix, 1, 
-                                function(row) all(row > refresh_times[i])), ]
-      i <- i + 1
-    }
-    
-    if(length(unit_times_matrix) > 0) {
-      refresh_times[i] <- max(unit_times_matrix) 
+    # Find the refresh times. First find the initial refresh time
+    refresh_times <- unit_times %>% min_length %>% numeric
+    num_stocks <- symbols %>% length
+    tau_cand <- numeric(num_stocks)
+    refresh_times[1] <- 
+      unit_times %>% 
+      lapply(FUN = function(x) {x[1]}) %>% 
+      unlist %>% 
+      max
+    for(i in 2:min_length(unit_times)) {
+      times <-  
+        unit_times %>% 
+        lapply(FUN = function(x) { 
+          x[-which(x <= refresh_times[i - 1])][1] 
+          }) %>% 
+        unlist
+      
+      if(any(is.na(times))) {
+        break 
+      }
+      
+      refresh_times[i] <- times %>% max
     }
     
     # Omit zero-entries
     refresh_times <- refresh_times[1:tail(which(refresh_times != 0), 1)]
+    
+    # Now that refresh-times are found for day d across all stock, we need to
+    # fill observations at each time with most recent observation to each re-
+    # fresh-time
+    for(symbol in symbols) {
+      temp_2 <- temp %>% filter(symb == symbol)
+      for(refresh_time in refresh_times) {
+        new_data %<>% 
+          rbind(   
+            temp_2 %>% 
+            filter(t_unit <= refresh_time) %>% 
+            tail(n = 1) %>%
+            mutate(t_unit = refresh_time)
+          )
+      }
+    }
   }
+  
+  return(new_data)
 }
