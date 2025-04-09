@@ -110,3 +110,9 @@ rmOutliers <- function(data) {
   
   return(new_data)
 }
+
+# Takes the raw polygon.io-dataset and applies the cleaning procedure P1, P2,
+# and Q4. In addition unit times are included
+cleanRawData <- function(data) {
+  data %>% msToUnitTime %>% rmZeroTrades %>% rmOutliers
+}
