@@ -87,7 +87,6 @@ rmOutliers <- function(data) {
                                        width = window_size,
                                        FUN = rolling_mad,
                                        align = "center",
-                                       fill = NA,
                                        partial = TRUE)
       
       # Find the rolling mean for the vw
@@ -95,7 +94,6 @@ rmOutliers <- function(data) {
                                 width = window_size,
                                 FUN = mean_mod,
                                 align = "center",
-                                fill = NA,
                                 partial = TRUE)
       
       # Calculate the number of absolute devations for each observation
