@@ -112,11 +112,13 @@ rmOutliers <- function(data) {
 }
 
 # Takes the raw polygon.io-dataset and applies the cleaning procedure P1, P2,
-# and Q4. In addition unit times are included
+# and Q4. In addition unit times are included, and prices are turned to log-
+# prices
 cleanRawData <- function(data) {
   data %>% 
     msToUnitTime %>% 
     rmZeroTrades %>% 
     rmOutliers %>% 
-    select(vw, day, symb, t_unit)
+    select(vw, day, symb, t_unit) %>% 
+    mutate(vw = log(vw))
 }
