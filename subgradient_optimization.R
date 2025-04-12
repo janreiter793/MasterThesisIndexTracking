@@ -9,7 +9,7 @@
 
 # TRUE: Script is run in test-mode
 # FALSE: Functions are just loaded
-TEST_MODE <- TRUE
+TEST_MODE <- FALSE
 
 ################################## Parameters ##################################
 EPSILON <- 1e-6 # Use for estimating subgradients : (f(x + EPSILON * e) - f(x))  
@@ -46,16 +46,20 @@ subgradient <- function(f, x, epsilon = EPSILON) {
 # tions for which the algorithm should terminate after. A tolerance value tol,
 # for which the algorithm terminates, when changes to x is less than tol.
 subgradient_descent <- function(f, x, beta = 1, max_iters = MAX_ITERS, 
-                                tol = TOL) {
+                                tol = TOL, start_from_k = 1) {
   # Store x values for visualization
-  history <- numeric(max_iters + 1)  
-  history[1] <- x
+  history <- matrix(nrow = length(x), ncol = max_iters + 2 - start_from_k)
+  history[, 1] <- x
   
   # Start iterating
-  for (iter in 1:max_iters) {
+  for (iter in start_from_k:max_iters) {
+    if(!(iter %% 10)) {
+      cat(paste0(iter, " iterations out of max ", max_iters, ".\n")) 
+    }
+    
     g <- subgradient(f = f, x = x) # Estimate a subgradient
-    x_new <- x - beta / iter * g       # Update x
-    history[iter + 1] <- x_new               # Save this new estimate
+    x_new <- x - beta / iter * g   # Update x
+    history[, iter + 2 - start_from_k] <- x_new    # Save this new estimate
     
     # Check for convergence
     if (sqrt(sum((x_new - x)^2)) < tol) {
@@ -69,7 +73,7 @@ subgradient_descent <- function(f, x, beta = 1, max_iters = MAX_ITERS,
   
   # Returns results as list containing the optimal x-value and the vector of
   # x-values the algorithm went through.
-  return(list(optimal_x = x, history = history[1:iter]))
+  return(list(optimal_x = x, history = history, iterations = iter))
 }
 
 ################################## TEST ########################################
@@ -90,8 +94,7 @@ test_script <- function() {
   
   # Do plots
   par(mfrow = c(2, 1))
-
-  # Test first function with starting value x = 5
+  
   result <- subgradient_descent(f = func1, x = 5)
   plot(result$history, type = "o", col = "blue", pch = 16, main = "x history",
        xlab = "Iteration", ylab = "x value")
@@ -111,8 +114,7 @@ test_script <- function() {
        xlim = c(1.5 * min(values), 1.5 * max(values)), ylim = c(min(fvalues), max(fvalues)))
   lines(x = values, y = fvalues)
   abline(h = 0, col = "red", lty = 2)  # Optimal solution
-
-  # Test second function with starting value x = 5
+  
   result <- subgradient_descent(f = func2, x = 5)
   plot(result$history, type = "o", col = "blue", pch = 16, main = "x history",
        xlab = "Iteration", ylab = "x value")
@@ -132,8 +134,7 @@ test_script <- function() {
        xlim = c(1.5 * min(values), 1.5 * max(values)), ylim = c(min(fvalues), max(fvalues)))
   lines(x = values, y = fvalues)
   abline(h = 0, col = "red", lty = 2)  # Optimal solution
-
-  # Test third function with starting value x = 5
+  
   result <- subgradient_descent(f = func3, x = 5)
   plot(result$history, type = "o", col = "blue", pch = 16, main = "x history",
        xlab = "Iteration", ylab = "x value")
@@ -153,8 +154,7 @@ test_script <- function() {
        xlim = c(1.5 * min(values), 1.5 * max(values)), ylim = c(min(fvalues), max(fvalues)))
   lines(x = values, y = fvalues)
   abline(h = 0, col = "red", lty = 2)  # Optimal solution
-
-  # Test fourth function with starting value x = 3
+  
   result <- subgradient_descent(f = func4, x = 3)
   plot(result$history, type = "o", col = "blue", pch = 16, main = "x history",
        xlab = "Iteration", ylab = "x value")

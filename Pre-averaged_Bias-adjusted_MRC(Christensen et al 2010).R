@@ -67,7 +67,10 @@ biasMatrix <- function(V, kn = floor(sqrt(nrow(V) - 1))) {
 }
 
 # The MRC-estimator with bias-adjustment. To ensure positive semidefiniteness
-# the MRC-estimate is projected onto the positive semidefinite cone
+# the MRC-estimate is projected onto the positive semidefinite cone by fact-
+# orizing into spectral decomposition, and setting eigenvalues that are less
+# than zero to zero. This method is due to Fan et al. Vast Volatility Matrix
+# Estimation Using High-Frequency Data for Portfolio Selection
 MRC <- function(V, kn = floor(sqrt(nrow(V) - 1)), 
                 bias_adjust = TRUE, project_psd = TRUE) {
   n <- nrow(V) - 1
@@ -87,5 +90,6 @@ MRC <- function(V, kn = floor(sqrt(nrow(V) - 1)),
     return(eigen_decomp$vectors %*% diag(eigen_decomp$values) %*% 
              t(eigen_decomp$vectors))
   }
+  
   return(MRC_val)
 }

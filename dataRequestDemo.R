@@ -166,7 +166,7 @@ downloadFromTo <- function(key = NULL, from = NULL, to = NULL,
 
 ##### Program execution #####
 main <- function() {
-  tickers <- c("XLF", "BRK-B", "JPM", "V", "MA", "BAC")
+  tickers <- c("XLF", "BRK-B", "JPM", "V", "MA", "BAC") #  <- Insert stock tickers here
   data <- data.frame()
   for(ticker in tickers) {
     temp <- downloadFromTo(key = API_KEY, from = "2024-04-01", to = "2024-04-15", 
@@ -174,6 +174,7 @@ main <- function() {
     data %<>% rbind(temp)
   }
   write.csv(file = paste0(WD, "/DemoData_2024-04-01-2024-04-15.csv"), x = data)
+  return(data)
 }
 
 if(TEST_RUN) {
