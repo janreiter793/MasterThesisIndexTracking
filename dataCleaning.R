@@ -119,6 +119,6 @@ cleanRawData <- function(data) {
     msToUnitTime %>% 
     rmZeroTrades %>% 
     rmOutliers %>% 
-    select(vw, day, symb, t_unit) %>% 
+    select(vw, day, symb, t_unit, t_POSIXct) %>% 
     mutate(vw = log(vw))
 }
