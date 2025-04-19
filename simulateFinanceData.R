@@ -21,7 +21,7 @@ set.seed(100)
 generateUnitTimes <- function(lambda) {
   num <- rpois(n = 1, lambda = lambda)
   times <- cumsum(rexp(lambda, lambda))
-  times[times < 1]
+  times[times <= 1]
 }
 
 # Takes a vector of diff-times and returns a vector of BM increments 
