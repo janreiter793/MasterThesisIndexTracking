@@ -11,6 +11,8 @@ library(magrittr)
 library(gtools)
 library(highfrequency)
 library(zoo)
+library(xts)
+library(tidyverse)
 set.seed(100)
 
 ##### Functions #####
@@ -55,7 +57,7 @@ simulateOUProcess <- function(times, theta, mu, sigma, y0 = 1) {
 # times, log-prices, symbols, POSITXct. Also adds etf-prices.
 simulateSemiMart <- function(liquidities, mu, beta0, beta1, alpha, rho,
                              day, symb = NULL, add.noise = T, 
-                             noise.to.signal.ratio = 0.001,
+                             noise.to.signal.ratio = 0.01,
                              ETF_name = "ETF", etf_liquidity, a = NULL) {
   d <-length(liquidities)
   
@@ -121,7 +123,7 @@ simulateSemiMart <- function(liquidities, mu, beta0, beta1, alpha, rho,
     sigma <- exp(beta0[i] + beta1[i] * OU_process) # Calculate sigma
     
     # Calculate the prices using mu as the initial value
-    vw <- cumsum(c(mu[i], 
+    vw <- cumsum(c(rnorm(n = 1), 
                    mu[i] * Delta_t + 
                      rho[i] * sigma[-length(sigma)] * BM_increments +
                      sqrt(1 - rho[i]^2) * sigma[-length(sigma)] * 
@@ -171,7 +173,7 @@ simulateSemiMart <- function(liquidities, mu, beta0, beta1, alpha, rho,
                                   tz = "EST")
   etf_POSIXct_times <- etf_POSIXct_times + etf_obs_times * 390 * 60 +
     day * 60 * 60 * 24
-  pData <- xts(x = etf_prices,
+  pData <- xts(x = exp(etf_prices),
                order.by = etf_POSIXct_times)
   etf_IV <- rCholCov(pData = pData)$CholCov
   etf_noise <- rnorm(n = length(etf_obs_times),
@@ -191,5 +193,5 @@ simulateSemiMart <- function(liquidities, mu, beta0, beta1, alpha, rho,
   new_data <- rbind(etf_data, new_data)
   
   # Now stock data is complete
-  return(new_data)
+  return(list(data = new_data, a = a))
 }
