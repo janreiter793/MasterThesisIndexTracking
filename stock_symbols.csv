@@ -1,0 +1,56 @@
+SPDR Fund,Sector,Ticker,Name
+XLC,Communication Services,META,Meta Platforms Inc Class A
+XLC,Communication Services,GOOGL,Alphabet Inc. Class A
+XLC,Communication Services,NFLX,Netflix Inc.
+XLC,Communication Services,GOOG,Alphabet Inc. Class C
+XLC,Communication Services,TTWP,Take-Two Interactive Software Inc.
+XLP,Consumer Staples,COST,Costco Wholesale Corporation
+XLP,Consumer Staples,WMT,Walmart Inc.
+XLP,Consumer Staples,PG,Procter & Gamble Company
+XLP,Consumer Staples,KO,Coca-Cola Company
+XLP,Consumer Staples,PM,Philip Morris International Inc.
+XLY,Consumer Discretionary,AMZN,Amazon.com Inc.
+XLY,Consumer Discretionary,TSLA,Tesla Inc.
+XLY,Consumer Discretionary,HD,Home Depot Inc.
+XLY,Consumer Discretionary,MCD,McDonald's Corporation
+XLY,Consumer Discretionary,BKNG,Booking Holdings Inc.
+XLE,Energy,XOM,Exxon Mobil Corporation
+XLE,Energy,CVX,Chevron Corporation
+XLE,Energy,COP,ConocoPhillips
+XLE,Energy,WMB,Williams Companies Inc.
+XLE,Energy,EOG,EOG Resources Inc.
+XLF,Financials,BRK.B,Berkshire Hathaway Inc. Class B
+XLF,Financials,JPM,JPMorgan Chase & Co.
+XLF,Financials,V,Visa Inc. Class A
+XLF,Financials,MA,Mastercard Incorporated Class A
+XLF,Financials,BAC,Bank of America Corp
+XLV,Health Care,LLY,Eli Lilly and Company
+XLV,Health Care,UNH,UnitedHealth Group Incorporated
+XLV,Health Care,JNJ,Johnson & Johnson
+XLV,Health Care,ABBV,AbbVie Inc.
+XLV,Health Care,ABT,Abbott Laboratories
+XLI,Industrials,GE,GE Aerospace
+XLI,Industrials,RTX,RTX Corporation
+XLI,Industrials,UBER,Uber Technologies Inc.
+XLI,Industrials,CAT,Caterpillar Inc.
+XLI,Industrials,HON,Honeywell International Inc.
+XLB,Materials,LIN,Linde plc
+XLB,Materials,SHW,Sherwin-Williams Company
+XLB,Materials,NEM,Newmont Corporation
+XLB,Materials,ECL,Ecolab Inc.
+XLB,Materials,APD,Air Products and Chemicals Inc.
+XLRE,Real Estate,AMT,American Tower Corporation
+XLRE,Real Estate,PLD,Prologis Inc.
+XLRE,Real Estate,WELL,Welltower Inc.
+XLRE,Real Estate,EQIX,Equinix Inc.
+XLRE,Real Estate,DLR,Digital Realty Trust Inc.
+XLK,Information Technology,AAPL,Apple Inc.
+XLK,Information Technology,MSFT,Microsoft Corporation
+XLK,Information Technology,NVDA,NVIDIA Corporation
+XLK,Information Technology,AVGO,Broadcom Inc.
+XLK,Information Technology,CRM,Salesforce Inc.
+XLU,Utilities,NEE,NextEra Energy Inc.
+XLU,Utilities,SO,Southern Company
+XLU,Utilities,DUK,Duke Energy Corporation
+XLU,Utilities,CEG,Constellation Energy Corporation
+XLU,Utilities,AEP,American Electric Power Company Inc.
