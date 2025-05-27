@@ -12,8 +12,6 @@ library(jsonlite)
 library(magrittr)
 
 ###### Constants #####
-TEST_RUN <- TRUE # If true, then program will execute when running script. When
-# false, functions will just be loaded.
 API_KEY <- "" # API key for polygon.io, does not require subscription.
 WD <- "" # Directory to store data
 
